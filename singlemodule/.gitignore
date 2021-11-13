@@ -1,0 +1,16 @@
+# macOS
+**/.DS_Store
+
+# Dev build
+build/
+tmp/
+.docker/
+.idea/
+
+# Test
+*.out
+*.log
+coverage.html
+
+# Environment variables
+.env

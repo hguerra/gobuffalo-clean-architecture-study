@@ -1,0 +1,43 @@
+version: "3"
+
+networks:
+  docker-net:
+    external: false
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=docker
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+    ports:
+      - "5432:5432"
+    volumes:
+      - ".docker/postgres:/var/lib/postgresql/data"
+    networks:
+      - docker-net
+
+  redis:
+    image: redis:6.2.6-alpine
+    command: redis-server --requirepass docker
+    container_name: redis
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    ports:
+      - "6379:6379"
+    volumes:
+      - ".docker/redis:/var/lib/redis:rw"
+    networks:
+      - docker-net
+
+  redisinsight:
+    image: redislabs/redisinsight:1.10.1
+    container_name: redisinsight
+    ports:
+      - "8001:8001"
+    volumes:
+      - ".docker/redisinsight:/db:rw"
+    networks:
+      - docker-net
