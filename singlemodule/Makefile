@@ -21,6 +21,7 @@ dependencies:
 
 clean:
 	rm -rf ./build
+	rm -rf ./tmp
 
 security:
 	gosec -quiet ./...
@@ -57,9 +58,7 @@ docker.down:
 	docker-compose down
 
 docker.build:
-	docker build -t fiber .
-
-run: docker.up swag.init migrate.up web.run.air
+	docker build -t web .
 
 build: clean test
 	CGO_ENABLED=0 go build -ldflags="-w -s" -o $(BUILD_DIR)/$(APP_NAME) ./cmd/apiserver/main.go
@@ -85,5 +84,7 @@ soda.migrate.down:
 soda.migrate.generate:
 	soda -c $(DATABASE_CONFIG_FILE) -p $(MIGRATIONS_FOLDER) generate fizz $@
 
+# https://stackoverflow.com/questions/2214575/passing-arguments-to-make-run
+# make soda.generate.model ARGS="book"
 soda.generate.model:
-	soda -c $(DATABASE_CONFIG_FILE) -p $(MIGRATIONS_FOLDER)/user --models-path $(MODELS_FOLDER)/user generate model user
+	soda -c $(DATABASE_CONFIG_FILE) -p $(MIGRATIONS_FOLDER)/$(ARGS) --models-path $(MODELS_FOLDER)/$(ARGS) generate model $(ARGS)
