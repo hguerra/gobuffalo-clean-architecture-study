@@ -1,7 +1,7 @@
 package grifts
 
 import (
-	"singlemodule/actions"
+	"singlemodule/application/web/actions"
 
 	"github.com/gobuffalo/buffalo"
 )
