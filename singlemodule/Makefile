@@ -2,9 +2,9 @@
 
 APP_NAME = web
 BUILD_DIR = $(PWD)/build
-MIGRATIONS_FOLDER = $(PWD)/infrastructure/database/migrations
 DATABASE_CONFIG_FILE = $(PWD)/infrastructure/database/database.yml
-DATABASE_URL = postgres://fiberexample:fiberexample@localhost/fiberexample?sslmode=disable
+MIGRATIONS_FOLDER = $(PWD)/infrastructure/database/migrations
+MODELS_FOLDER = $(PWD)/domain
 
 configure:
 	asdf install
@@ -84,3 +84,6 @@ soda.migrate.down:
 
 soda.migrate.generate:
 	soda -c $(DATABASE_CONFIG_FILE) -p $(MIGRATIONS_FOLDER) generate fizz $@
+
+soda.generate.model:
+	soda -c $(DATABASE_CONFIG_FILE) -p $(MIGRATIONS_FOLDER)/user --models-path $(MODELS_FOLDER)/user generate model user

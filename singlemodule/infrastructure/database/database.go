@@ -14,6 +14,12 @@ var DB *pop.Connection
 func init() {
 	var err error
 	env := envy.Get("GO_ENV", "development")
+
+	err = pop.AddLookupPaths("./infrastructure/database")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	DB, err = pop.Connect(env)
 	if err != nil {
 		log.Fatal(err)
