@@ -1,3 +1,4 @@
+# https://github.com/markbates/refresh
 app_root: .
 ignored_folders:
 - vendor
@@ -15,6 +16,7 @@ included_extensions:
 - .env
 build_path: tmp
 build_delay: 200ns
+build_target_path : "./cmd/web"
 binary_name: singlemodule-build
 command_flags: []
 enable_colors: true
